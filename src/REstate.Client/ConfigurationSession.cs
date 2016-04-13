@@ -24,13 +24,7 @@ namespace REstate.Client
             {
                 var response = await client.GetAsync($"machinedefinitions/{machineDefinitionId}");
 
-                switch (response.StatusCode)
-                {
-                    case HttpStatusCode.Unauthorized:
-                        throw new UnauthorizedException();
-                    case HttpStatusCode.Forbidden:
-                        throw new ForbiddenException();
-                }
+                if (!response.IsSuccessStatusCode) throw GetException(response);
 
                 return await response.Content.ReadAsStringAsync();
             });
@@ -49,13 +43,7 @@ namespace REstate.Client
                 var response = await client.PostAsync("machinedefinitions/",
                     new StringContent(payload, Encoding.UTF8, "application/json"));
 
-                switch (response.StatusCode)
-                {
-                    case HttpStatusCode.Unauthorized:
-                        throw new UnauthorizedException();
-                    case HttpStatusCode.Forbidden:
-                        throw new ForbiddenException();
-                }
+                if (!response.IsSuccessStatusCode) throw GetException(response);
 
                 return await response.Content.ReadAsStringAsync();
             });
@@ -71,13 +59,7 @@ namespace REstate.Client
             {
                 var response = await client.GetAsync($"machinedefinitions/{machineDefinitionId}/diagram");
 
-                switch (response.StatusCode)
-                {
-                    case HttpStatusCode.Unauthorized:
-                        throw new UnauthorizedException();
-                    case HttpStatusCode.Forbidden:
-                        throw new ForbiddenException();
-                }
+                if (!response.IsSuccessStatusCode) throw GetException(response);
 
                 return await response.Content.ReadAsStringAsync();
             });

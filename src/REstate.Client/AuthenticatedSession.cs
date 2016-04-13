@@ -2,6 +2,7 @@
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using System.Net;
 
 namespace REstate.Client
 {
@@ -45,6 +46,42 @@ namespace REstate.Client
                 _httpClient.Dispose();
             }
 
+        }
+
+        protected Exception GetException(HttpResponseMessage response)
+        {
+            Exception ex;
+            switch (response.StatusCode)
+            {
+                case HttpStatusCode.Unauthorized:
+                    ex = new UnauthorizedException();
+                    break;
+                case HttpStatusCode.Conflict:
+                    ex = new StateConflictException();
+                    break;
+                case HttpStatusCode.Forbidden:
+                    ex = new ForbiddenException();
+                    break;
+                case HttpStatusCode.ServiceUnavailable:
+                    ex = new HttpServiceException("Service Unavailable");
+                    break;
+                case HttpStatusCode.NotFound:
+                    ex = new HttpServiceException("Endpoint route not found");
+                    break;
+                case HttpStatusCode.InternalServerError:
+                    ex = new HttpServiceException("API encountered an error");
+                    break;
+
+                default:
+                    ex = new Exception("Unknown error occured.");
+                    break;
+            }
+
+            ex.Data.Add("StatusCode", (int)response.StatusCode);
+            ex.Data.Add("Content", response.Content.ReadAsStringAsync().Result);
+            ex.Data.Add("RequestMessage", response.RequestMessage);
+
+            return ex;
         }
 
         /// <summary>
