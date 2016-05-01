@@ -3,10 +3,10 @@ using System.Threading.Tasks;
 
 namespace REstate.Client
 {
-    public interface IConfigurationSession : IAuthenticatedSession
+    public interface IConfigurationSession : IAuthenticatedSession, IInstancesSession
     {
-        Task<IStateMachineConfiguration> DefineStateMachine(IStateMachineConfiguration configuration);
-        Task<string> GetMachineDiagram(string machineDefinitionId);
-        Task<IStateMachineConfiguration> GetStateMachineConfiguration(string machineDefinitionId);
+        Task<Machine> DefineStateMachine(Machine configuration);
+        Task<string> GetMachineDiagram(string machineName);
+        Task<Machine> GetMachine(string machineName);
     }
 }

@@ -37,15 +37,5 @@ namespace REstate.Client
         {
             return new REstateAuthClient(ApiKeyAuthAddress);
         }
-
-        public REstateInstancesClient GetInstancesClient(string baseAddress)
-        {
-            return new REstateInstancesClient(ApiKeyAuthAddress, baseAddress);
-        }
-
-        public REstateInstancesClient GetInstancesClient(Uri baseAddress)
-        {
-            return new REstateInstancesClient(ApiKeyAuthAddress, baseAddress);
-        }
     }
 }

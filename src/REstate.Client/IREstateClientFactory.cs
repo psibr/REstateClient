@@ -9,7 +9,5 @@ namespace REstate.Client
         REstateAuthClient GetAuthClient();
         REstateConfigurationClient GetConfigurationClient(Uri baseAddress);
         REstateConfigurationClient GetConfigurationClient(string baseAddress);
-        REstateInstancesClient GetInstancesClient(Uri baseAddress);
-        REstateInstancesClient GetInstancesClient(string baseAddress);
     }
 }
