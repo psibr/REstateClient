@@ -23,6 +23,7 @@ namespace REstate.Client
         }
         
         protected async Task<string> EnsureAuthenticatedRequest(Func<HttpClient, Task<string>> func)
+
         {
             try
             {
@@ -71,7 +72,6 @@ namespace REstate.Client
                 case HttpStatusCode.InternalServerError:
                     ex = new HttpServiceException("API encountered an error");
                     break;
-
                 default:
                     ex = new Exception("Unknown error occured.");
                     break;
@@ -79,7 +79,7 @@ namespace REstate.Client
 
             ex.Data.Add("StatusCode", (int)response.StatusCode);
             ex.Data.Add("Content", response.Content.ReadAsStringAsync().Result);
-            ex.Data.Add("RequestMessage", response.RequestMessage);
+            ex.Data.Add("RequestUri", response.RequestMessage.RequestUri.ToString());
 
             return ex;
         }
